@@ -1,0 +1,43 @@
+.dashboard-card {
+    color: #fff;
+    border-radius: 12px;
+    border: none;
+  }
+  
+  .dashboard-card h2 {
+    font-weight: bold;
+  }
+  
+  .progress {
+    height: 8px;
+    background-color: rgba(255, 255, 255, 0.25);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  .progress-bar {
+    height: 100%;
+    border-radius: 10px;
+    background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.9),
+      rgba(255, 255, 255, 0.6)
+    );
+  }
+  
+  /* Gradients */
+  .pink {
+    background: linear-gradient(to right, #7b1fa2, #e91e63);
+  }
+  
+  .blue {
+    background: linear-gradient(to right, #2c3e50, #3498db);
+  }
+  
+  .green {
+    background: linear-gradient(to right, #1b5e20, #66bb6a);
+  }
+  
+  .orange {
+    background: linear-gradient(to right, #a65c00, #fbc02d);
+  }

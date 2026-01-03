@@ -1,0 +1,66 @@
+<section class="vh-100" style="background-color: #e2d5de;">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col col-xl-10">
+  
+          <div class="card" style="border-radius: 15px;">
+            <div class="card-body p-5">
+  
+              <h6 class="mb-5 text-center text-primary">Todo List</h6>
+              <form (ngSubmit)="createToDo()" class="d-flex justify-content-center align-items-center mb-4">
+               
+              <div data-mdb-input-init class="form-outline flex-fill">
+                <label class="form-label" for="form3">Add new Task</label>
+                <input type="text" class="form-control form-control-lg" id="exampleFormControlInput1"
+                placeholder="Add new Task"
+                [(ngModel)]="newToDo.title"
+                name="title"
+                  />
+                
+              </div>
+              <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg ms-2"
+              >Add</button>
+            </form>
+            @for (todo of todos; track todo.id) {
+             <ul class="list-group list-group-horizontal rounded-0 mb-2">
+              
+                  <li class="list-group-item d-flex align-items-center ps-0 pe-3 py-1 rounded-0 border-0 bg-transparent">
+                    <div class="form-check">
+                      <input class="form-check-input me-0" type="checkbox" value="" id="flexCheckChecked3"
+                      [(ngModel)]="todo.completed"/>
+                    </div>
+                  </li>
+                  <li class="list-group-item px-3 py-1 d-flex align-items-center flex-grow-1 border-1 bg-transparent">
+                    <p class="lead fw-normal mb-0 bg-light w-100 ms-n2 ps-2 py-1 rounded"
+                    [ngClass]="{'text-decoration-line-through':todo.completed}"
+                    [routerLink]="['/todos',todo.id]">
+                      {{todo.title}}
+
+                    </p>
+                  </li>
+                  <li class="list-group-item ps-3 pe-0 py-1 rounded-0 border-0 bg-transparent">
+                    <div class="d-flex flex-row justify-content-end mb-1">
+                      <a class="text-danger" data-mdb-toggle="tooltip" title="Delete todo"
+                      (click)="deleteToDo(todo.id)">
+                      <i class="fa-solid fa-trash"></i>
+
+                        
+                      </a>
+                    </div>
+                    
+
+                  </li>
+                </ul>
+              }
+              
+
+             
+  
+             
+            </div>
+          </div>
+  
+        </div>
+      </div>
+    </div>
+  </section>

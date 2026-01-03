@@ -1,0 +1,75 @@
+.todo-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 0;
+  }
+  
+  /* Gradient Header */
+  .todo-header {
+    width: 500px;
+    height: 160px;
+    border-radius: 40px;
+    background: linear-gradient(135deg, #4a4aff, #b7f5c4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+  
+  .todo-header h2 {
+    color: #e74c3c;
+    font-weight: bold;
+  }
+  
+  /* Card */
+  .todo-card {
+    width: 700px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 20px;
+    background: #fff;
+  }
+  
+  /* Form */
+  .form-group {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .form-group label {
+    width: 100px;
+    font-weight: bold;
+  }
+  
+  .form-control {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  /* Checkbox */
+  .checkbox-group input {
+    width: 18px;
+    height: 18px;
+  }
+  
+  /* Button */
+  .btn-update {
+    width: 100%;
+    padding: 10px;
+    background: linear-gradient(to right, #3b82f6, #2563eb);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .btn-update:hover {
+    opacity: 0.9;
+  }
