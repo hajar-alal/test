@@ -1,33 +1,56 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {Observable} from 'rxjs';
+import { docData } from '@angular/fire/firestore';
+import {
+  Firestore,
+  collection,
+  collectionData,
+  doc,
+  addDoc,
+  deleteDoc,
+  updateDoc
+} from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 import { ToDo } from '../Models/to-do';
+
 @Injectable({
   providedIn: 'root'
 })
 export class ToDoService {
-  private apiUrl='http://localhost:3000/todos';
 
-  constructor(private httpClient: HttpClient) { }
-  getTodos(): Observable<ToDo[]>
-  {
-    
-    return this.httpClient.get<ToDo[]>(this.apiUrl);
+  private todosCollection;
+
+  constructor(private firestore: Firestore) {
+    this.todosCollection = collection(this.firestore, 'todos');
   }
-  createToDo(todo:ToDo): Observable<ToDo>
-  {
-    return this.httpClient.post<ToDo>(this.apiUrl, JSON.stringify(todo));
+// 🔹 جلب مهمة واحدة بالـ id
+getTodoById(id: string): Observable<ToDo> {
+  const todoDoc = doc(this.firestore, `todos/${id}`);
+  return docData(todoDoc, { idField: 'id' }) as Observable<ToDo>;
+}
+  // جلب كل المهام
+  getTodos(): Observable<ToDo[]> {
+    return collectionData(this.todosCollection, {
+      idField: 'id'
+    }) as Observable<ToDo[]>;
   }
-  getToDoById(id:string): Observable<ToDo>
-  {
-    return this.httpClient.get<ToDo>(`${this.apiUrl}/${id}`)
+
+  // إضافة مهمة
+  addTodo(todo: Omit<ToDo, 'id'>) {
+    return addDoc(this.todosCollection, todo);
   }
-  updateToDo(todo : ToDo) : Observable<ToDo>
-  {
-    return this.httpClient.put<ToDo>(`${this.apiUrl}/${todo.id}`,todo)
+
+  // تعديل مهمة
+  updateTodo(todo: ToDo) {
+    const todoDoc = doc(this.firestore,`todos/${todo.id}`);
+    return updateDoc(todoDoc, {
+      title: todo.title,
+      completed: todo.completed
+    });
   }
-  deleteToDo(todoId:string) : Observable<void>
-  {
-    return this.httpClient.delete<void>(`${this.apiUrl}/${todoId}`)
+
+  // حذف مهمة
+  deleteTodo(id: string) {
+    const todoDoc = doc(this.firestore, `todos/${id}`);
+    return deleteDoc(todoDoc);
   }
 }

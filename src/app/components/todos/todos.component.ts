@@ -14,32 +14,31 @@ import { RouterModule } from '@angular/router';
 })
 export class TodosComponent implements OnInit {
   todos : ToDo[] = [];
-  newToDo : ToDo ={} as ToDo;
+  newToDo: { title: string } = { title: '' };
   constructor(private todoService: ToDoService){}
   ngOnInit(): void {
     this.getToDos()
   }
   getToDos(){
-    this.todoService.getTodos().subscribe(x =>
-      {
-        this.todos =x;
-
-      })
+    this.todoService.getTodos().subscribe(todos => {
+  console.log('Todos from Firestore:', todos);
+  this.todos = todos;
+});
   }
   createToDo(): void{
-    const newToDo1 = {id:this.newToDo.id, title : this.newToDo.title , completed:false};
-    this.newToDo= newToDo1;
-    this.todoService.createToDo(newToDo1).subscribe(todo=>
-      {
-        this.todos.push(todo);
-      });
+    if (!this.newToDo.title) return;
+
+  const todo = {
+    title: this.newToDo.title,
+    completed: false
+  };
+
+  this.todoService.addTodo(todo).then(() => {
+    this.newToDo = {} as ToDo;
+  });
   }
   deleteToDo(todoId:string):void{
-    this.todoService.deleteToDo(todoId).subscribe(() =>
-    {
-      this.todos= this.todos.filter(todo => todo.id!==todoId);
-    })
-
+    this.todoService.deleteTodo(todoId);
   }
 
 }

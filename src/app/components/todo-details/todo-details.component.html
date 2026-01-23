@@ -1,42 +1,114 @@
 @if (todo) {
-<div class="todo-container">
 
-  <!-- Header Card -->
-  <div class="todo-header">
-    <h2 class="text-danger">Todo Details</h2>
-    <h6>Task Title : {{todo.title}}</h6>
-    <h6>Task Completed : {{todo.completed}}</h6>
-  </div>
-
-  <!-- Form Card -->
-  <div class="todo-card">
-    <form (ngSubmit)="UpdateToDo()" #form1="ngForm">
-      <div class="form-group">
-        <label>Task Title:</label>
-        <input
-          class="form-control w-75" type="text" placeholder="Todo Title" id="title"
-          [(ngModel)]="todo.title"
-          required=""
-          pattern="[A-Z-a-z]{3,}"
-          name="title"
-          #input1="ngModel"
-          [ngClass]="{'is-invalid':(input1.touched || input1.dirty)&& input1.invalid}"
-        />
+  <div class="container mt-5">
+  
+    <!-- Todo Details Card -->
+    <div class="card shadow-lg mb-4">
+      <div class="card-body">
+  
+        <h2 class="text-center text-primary fw-bold mb-4">
+          <i class="fa-solid fa-clipboard-list me-2"></i>
+          Todo Details
+        </h2>
+  
+        <div class="row text-center">
+          <div class="col-md-6 mb-3">
+            <div class="p-3 border rounded bg-light">
+              <h6 class="fw-semibold text-secondary mb-1">Task Title</h6>
+              <p class="fs-5 mb-0">{{ todo.title }}</p>
+            </div>
+          </div>
+  
+          <div class="col-md-6 mb-3">
+            <div class="p-3 border rounded bg-light">
+              <h6 class="fw-semibold text-secondary mb-1">Status</h6>
+              <span
+                class="badge fs-6"
+                [ngClass]="todo.completed ? 'bg-success' : 'bg-warning text-dark'"
+              >
+                {{ todo.completed ? 'Completed' : 'Not Completed' }}
+              </span>
+            </div>
+          </div>
+        </div>
+  
       </div>
-
-      <div class="form-group checkbox-group">
-        <label>Completed:</label>
-        <input type="checkbox" id="completed" name="completed" class="form-check w-50"
-        [(ngModel)]="todo.completed" />
+    </div>
+  
+    <!-- Edit Todo Card -->
+    <div class="card shadow">
+      <div class="card-body">
+  
+        <h4 class="mb-4 fw-bold text-secondary">
+          Edit Task
+        </h4>
+  
+        <form (ngSubmit)="updateTodo()" #form1="ngForm">
+  
+          <!-- Title Input -->
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Task Title</label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Enter task title"
+              [(ngModel)]="todo.title"
+              name="title"
+              required
+              pattern="[A-Za-z]{3,}"
+              #input1="ngModel"
+              [ngClass]="{
+                'is-invalid': (input1.touched || input1.dirty) && input1.invalid
+              }"
+            />
+  
+            <!-- Validation Messages -->
+            @if ((input1.touched || input1.dirty) && input1.invalid) {
+              <div class="alert alert-danger mt-2 p-2">
+                <ul class="mb-0 ps-3">
+                  @if (input1.errors?.['required']) {
+                    <li>Task title is required.</li>
+                  }
+                  @if (input1.errors?.['pattern']) {
+                    <li>Minimum 3 letters, only alphabetic characters allowed.</li>
+                  }
+                </ul>
+              </div>
+            }
+          </div>
+  
+          <!-- Completed Checkbox -->
+          <div class="form-check form-switch mb-4">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="completed"
+              [(ngModel)]="todo.completed"
+              name="completed"
+            />
+            <label class="form-check-label fw-semibold" for="completed">
+              Mark as completed
+            </label>
+          </div>
+  
+          <!-- Submit Button -->
+          <div class="text-end">
+            <button
+              type="submit"
+              class="btn btn-primary px-4"
+              [disabled]="form1.invalid"
+            >
+              <i class="fa-solid fa-save me-2"></i>
+              Update Todo
+            </button>
+          </div>
+  
+        </form>
+  
       </div>
-
-      <button class="btn-update" id="submitButton" type="submit"
-      [disabled]="form1.invalid">
-        Update
-      </button>
-    </form>
+    </div>
+  
   </div>
-
-</div>
-<h1> {{input1.errors |json}}</h1>
-}
+  
+  }
+  
